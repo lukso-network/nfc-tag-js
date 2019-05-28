@@ -14,4 +14,6 @@ $ npm install
 $ node main.js
 ```
 
+This is reading the cards using the `TAG_ISO_14443_3` standard `uid`.
+
 

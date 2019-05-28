@@ -21,10 +21,13 @@ nfc.on('reader', reader => {
         // [only TAG_ISO_14443_3] String uid: tag uid
         // [only TAG_ISO_14443_4] Buffer data: raw data from select APDU response
 
+        console.log('===========================')
+        console.log('LIBRARY: nfc-pcsc: ^0.7.3');
         console.log(`${reader.reader.name}  card detected`);
         console.log('ID:', card.uid);
 
         console.log('full card:', card);
+        console.log('===========================')
 
     });
 
