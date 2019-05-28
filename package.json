@@ -1,0 +1,26 @@
+{
+  "name": "lukso-nfc-test",
+  "version": "0.0.1",
+  "description": "Simple test repository for the LUKSO NFC chips",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukso-network/nfc-test.git"
+  },
+  "keywords": [
+    "nfc",
+    "lukso"
+  ],
+  "author": "Fabian Vogelsteller <fabian@lukso.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lukso-network/nfc-test/issues"
+  },
+  "homepage": "https://github.com/lukso-network/nfc-test#readme",
+  "dependencies": {
+    "nfc-pcsc": "^0.7.3"
+  }
+}
