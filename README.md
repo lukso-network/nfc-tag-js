@@ -11,9 +11,12 @@ $ npm install
 ## Run
 
 ```
-$ node main.js
+$ npm run main
 ```
 
-This is reading the cards `TAG_ISO_14443_3` standard `uid`.
+or
 
-
+```
+$ npm run build
+$ node lib/main.js
+```
