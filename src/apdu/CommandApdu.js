@@ -21,7 +21,7 @@ const ins = {
 class CommandApdu {
 
   // Construcotr.
-  // APDU Commnd = CLAss(1 byte) + INStruct(1 byte) + Parameter1(1 byte) + Parameter2(1 byte) + LC(Length Command 1 byte) + Data (LEN byte) + LE(Length Response 1 byte, optional)
+  // APDU Commnd = CLAss(1 byte) + INStruct(1 byte) + Parameter1(1 byte) + Parameter2(1 byte) + LC(Length Command 1 byte, optional) + Data (LC byte, optional) + LE(Length Response 1 byte, optional)
   constructor(obj) {
     let cla = obj.cla;
     let ins = obj.ins;
