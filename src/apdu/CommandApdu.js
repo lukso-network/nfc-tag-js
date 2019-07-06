@@ -1,3 +1,8 @@
+/**
+ * @file Construct APDU commands.
+ * 
+ */
+
 'use strict';
 
 import Hexify from 'hexify';
@@ -15,6 +20,8 @@ const ins = {
 
 class CommandApdu {
 
+  // Construcotr.
+  // APDU Commnd = CLAss(1 byte) + INStruct(1 byte) + Parameter1(1 byte) + Parameter2(1 byte) + LC(Length Command 1 byte) + Data (LEN byte) + LE(Length Response 1 byte, optional)
   constructor(obj) {
     let cla = obj.cla;
     let ins = obj.ins;
@@ -39,20 +46,24 @@ class CommandApdu {
     }
   }
 
+  // Get hex string.
   toHexString() {
     return Hexify.toHexString(this.bytes).toUpperCase();
   }
 
+  // Get byte array.
   toByteArray() {
     return this.bytes;
   }
 
+  // Get buffer.
   toBuffer() {
     return Buffer.from(this.bytes);
   }
 }
 
 export default {
+  // Get APDU command: disable PIN.
   disableVerification(pin) {
     let tlv = new SimpleTlv();
     tlv.set(Tlv.TAG_TRANSACTION_FREEZE_PIN, pin);
@@ -66,6 +77,7 @@ export default {
     return commandApdu.toBuffer();
   },
 
+  // Get APDU command: enable PIN.
   enableVerification(pin) {
     let tlv = new SimpleTlv();
     tlv.set(Tlv.TAG_TRANSACTION_FREEZE_PIN, pin);
@@ -79,6 +91,7 @@ export default {
     return commandApdu.toBuffer();
   },
 
+  // Get APDU command: chanllenge response.
   internalAuthenticate(tag, chanllenge) {
     let tlv = new SimpleTlv();
     tlv.set(Tlv.TAG_CHALLENGE, chanllenge);
@@ -92,6 +105,7 @@ export default {
     return commandApdu.toBuffer();
   },
 
+  // Get APDU command: read chip information. eg, public key, sign transaction times(counter).
   readInformation(tag) {
     let commandApdu = new CommandApdu({
       cla: cla,
@@ -102,6 +116,7 @@ export default {
     return commandApdu.toBuffer();
   },
 
+  // Get APDU command: read chip certification issued by manufacturer.
   readCertification(offset) {
     let commandApdu = new CommandApdu({
       cla: cla,
@@ -112,6 +127,7 @@ export default {
     return commandApdu.toBuffer();
   },
 
+  // Get APDU command: sign transaction hash.
   signTxHash(txHash) {
     let tlv = new SimpleTlv();
     tlv.set(Tlv.TAG_TRANSACTION_HASH, txHash);

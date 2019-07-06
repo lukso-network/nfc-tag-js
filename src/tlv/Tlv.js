@@ -1,3 +1,8 @@
+/**
+ * @file Simple TLV tag definitions used by LUKSO NFC chips.
+ * 
+ */
+
 export default {
   TAG_CERTIFICATE : 0x30,
   TAG_PRIVATE_KEY_DEV : 0x52,

@@ -1,3 +1,8 @@
+/**
+ * @file Deal with LUKSO NFC Chip.
+ * 
+ */
+
 'use strict';
 
 import BN from 'bn.js';
@@ -12,6 +17,7 @@ const ec = new Elliptic.ec('secp256k1');
 
 class LuksoNfcChip {
   
+  // Constructor.
   constructor(reader, blkPubKey) {
     const fields = ['reader', 'blkPubKey'];
     fields.forEach(field => {
@@ -28,6 +34,7 @@ class LuksoNfcChip {
     }
   }
 
+  // Class builder.
   static async build(reader) {
     const response = await reader.transmit(CommandApdu.readInformation(Tlv.TAG_PUBLIC_KEY_BLK), 128);
     const responseApdu = new ResponseApdu(response);
@@ -40,6 +47,7 @@ class LuksoNfcChip {
     }
   }
 
+  // Read chip information, eg, public key.
   read(tag) {
     return new Promise((resolve, reject) => {
       if (tag !== Tlv.TAG_PUBLIC_KEY_BLK && tag !== Tlv.TAG_PUBLIC_KEY_BLK && tag != Tlv.TAG_TRANSACTION_SIGNATURE_COUNTER) {
@@ -64,7 +72,7 @@ class LuksoNfcChip {
     });
   }
 
-  // Verify by challenge-response
+  // Verify chip by challenge-response.
   verify(tag) {
     return new Promise((resolve, reject) => {
       if (tag !== Tlv.TAG_PRIVATE_KEY_DEV && tag !== Tlv.TAG_PRIVATE_KEY_BLK) {
@@ -104,6 +112,7 @@ class LuksoNfcChip {
     });
   }
 
+  // Sign transaction hash.
   signTransactionHash(chainID, hash) {
     return new Promise((resolve, reject) => {
       this.reader.transmit(CommandApdu.signTxHash(hash), 255).then((response) => {
@@ -128,12 +137,14 @@ class LuksoNfcChip {
     });
   }
 
+  // Double SHA256.
   _doubleSHA256(msg) {
     let first = crypto.createHash('sha256').update(msg, 'hex').digest();
     let sencond = crypto.createHash('sha256').update(first, 'hex').digest();
     return sencond;
   }
 
+  // Make signature canonicalised.
   _toCanonicalised(s) {
     const bnS = new BN(s, 16);
     const bnN = new BN('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141', 16);
@@ -145,6 +156,7 @@ class LuksoNfcChip {
     }
   }
 
+  // Calculate public key recovery parameter. 
   _calculateRec(chainID, hash, sig) {
     try {
       const key = ec.keyFromPublic(Buffer.from(this.blkPubKey, 'hex'));

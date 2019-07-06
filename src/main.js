@@ -1,3 +1,8 @@
+/**
+ * @file LUKSO NFC chips test example.
+ * 
+ */
+
 "use strict";
 
 import { NFC } from 'nfc-pcsc';
@@ -17,7 +22,7 @@ nfc.on('reader', async reader => {
     let chip = await LuksoNfcChip.build(reader);
     console.log(`Public key:                0x${chip.blkPubKey}`);
 
-    // Transaction Signature Counter
+    // Read Transaction Signature Counter
     let counter = await chip.read(Tlv.TAG_TRANSACTION_SIGNATURE_COUNTER);
     console.log(`Tx Signature Counter:      0x${counter}`)
 
@@ -49,7 +54,7 @@ nfc.on('reader', async reader => {
     const raw = tx.serialize();
     console.log(`Signed Raw TX:             0x${raw.toString('hex').toUpperCase()}`);
 
-    // Transaction Signature Counter
+    // Read Transaction Signature Counter (Should increase 1)
     counter = await chip.read(Tlv.TAG_TRANSACTION_SIGNATURE_COUNTER);
     console.log(`Tx Signature Counter:      0x${counter}`)
   });

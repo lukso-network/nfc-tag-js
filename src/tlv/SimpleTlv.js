@@ -1,9 +1,16 @@
+/**
+ * @file Simple TLV utilities defined in ISO/IEC 7816-4.
+ * 
+ */
+
 'use strict';
 
 const Hexify = require('hexify');
 
+// General TLV object.
 class Tlv {
   
+  // Constructor.
   constructor(obj) {
     const fields = ['t', 'l', 'v'];
 
@@ -23,6 +30,7 @@ class Tlv {
     }
   }
 
+  // Serialization.
   serialize(encoding) {
     let array = this.t.concat(this.l, this.v);
     if (encoding === 'hex') {
@@ -37,8 +45,10 @@ class Tlv {
   }
 }
 
+// Simple TLV object defined in ISO/IEC 7816-4.
 class SimpleTlv {
 
+  // Constructor.
   constructor(obj) {
     this._tlv = [];
     if (obj) {
@@ -46,10 +56,12 @@ class SimpleTlv {
     }
   }
 
+  // Get entire length.
   get length() {
     return this._tlv.length;
   }
 
+  // Get value by tag.
   get(tag, encoding) {
     let arr = null;
     this._tlv.forEach(e => {
@@ -70,6 +82,7 @@ class SimpleTlv {
     }
   }
 
+  // Set tag and value.
   set(tag, value) {
     if (this._existingTag(tag)) {
       return;
@@ -101,6 +114,7 @@ class SimpleTlv {
     this._tlv.push(new Tlv(tlv));
   }
 
+  // Serialization.
   serialize(encoding) {
     let tlv = [];
     if (encoding) {
