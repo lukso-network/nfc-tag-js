@@ -24,7 +24,7 @@
   "homepage": "https://github.com/lukso-network/nfc-test#readme",
   "dependencies": {
     "bn.js": "^4.11.8",
-    "elliptic": "^6.4.1",
+    "elliptic": "^6.5.4",
     "ethereumjs-tx": "^1.3.7",
     "hexify": "^1.0.1",
     "nfc-pcsc": "^0.7.3"
